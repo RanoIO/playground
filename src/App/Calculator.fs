@@ -7,12 +7,11 @@ module Helper =
 
     let tryDouble (str: string) =
         let mutable value = 0.0
-        let succ = Double.TryParse (str, &value)
+        let succ = Double.TryParse(str, &value)
 
         if succ then Some value else None
 
-    let always (value: 'a) : ('b -> 'a) =
-        (fun _ -> value)
+    let always (value: 'a): 'b -> 'a = (fun _ -> value)
 
     let mapError (callback: unit -> 'b) (value: 'a option): 'a option =
         match value with
@@ -23,7 +22,11 @@ module Calculator =
 
     // REPL - Read Eval Print Loop (Calculator)
 
-    type Operation = Add | Sub | Mul | Div
+    type Operation =
+        | Add
+        | Sub
+        | Mul
+        | Div
 
     type Command =
         | Math of Operation
@@ -31,11 +34,10 @@ module Calculator =
         | Invalid
 
 
-    let readOperand () =
-        Console.ReadLine ()
-        |> Helper.tryDouble
+    let readOperand () = Console.ReadLine() |> Helper.tryDouble
 
-    let parse (value: string) : Command =
+
+    let parse (value: string): Command =
         match value with
         | "1" -> Math Add
         | "2" -> Math Sub
@@ -54,7 +56,7 @@ module Calculator =
         printfn "4. Division"
         printfn "5. Exit"
         printf "Make selection: "
-        Console.ReadLine ()
+        Console.ReadLine()
 
 
     // Business logic
