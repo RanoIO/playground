@@ -3,21 +3,6 @@
 open System
 
 
-module Helper =
-
-    let tryDouble (str: string) =
-        let mutable value = 0.0
-        let succ = Double.TryParse(str, &value)
-
-        if succ then Some value else None
-
-    let always (value: 'a): 'b -> 'a = (fun _ -> value)
-
-    let mapError (callback: unit -> 'b) (value: 'a option): 'a option =
-        match value with
-        | Some x -> Some x
-        | None -> (callback ()) |> always None
-
 module Calculator =
 
     // REPL - Read Eval Print Loop (Calculator)
@@ -84,6 +69,10 @@ module Calculator =
         Option.map2 (eval o) o1 o2
 
 
+    let doExit () =
+        printfn "Bye bye!\n"
+
+
     // The loop
     let rec loop () =
         read ()
@@ -95,9 +84,7 @@ module Calculator =
                 |> Option.map print
                 |> Helper.mapError (fun _ -> printf "Invalid operands\n\n")
                 |> (fun _ -> loop ())
-            | Exit ->
-                printf "Bye bye\n\n"
-                ignore ()
+            | Exit -> doExit ()
             | Invalid ->
                 printf "Invalid operation\n\n"
                 loop ())

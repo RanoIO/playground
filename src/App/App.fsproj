@@ -1,13 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="Helper.fs" />
     <Compile Include="Calculator.fs" />
+    <Compile Include="LeapYear.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
 </Project>
