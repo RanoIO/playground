@@ -26,6 +26,7 @@ module BST =
         | PreOrder
         | InOrder
         | PostOrder
+        | Search of int
 
 
     type Command =
@@ -86,6 +87,15 @@ module BST =
         postorderLoop tree [] |> List.rev
 
 
+    let rec search tree (value: int) =
+        match tree with
+        | Empty -> "Not found"
+        | Tree node ->
+            if node.value = value then "Found"
+            else if node.value > value then search node.left value
+            else search node.right value
+
+
     let parseBSTNode (raw: string) = HP.Helper.tryInteger raw
 
 
@@ -112,6 +122,13 @@ module BST =
         | "2" -> Valid PreOrder
         | "3" -> Valid InOrder
         | "4" -> Valid PostOrder
+        | "5" ->
+            printf "Enter the node to search: "
+            let input = parseBSTNode (Console.ReadLine())
+
+            match input with
+            | Some value -> Valid (Search value)
+            | None -> Invalid "Invalid search value"
         | _ -> Invalid "Invalid option"
 
 
@@ -127,6 +144,9 @@ module BST =
         | PostOrder ->
             printfn "Postorder: %A" (postorder tree)
             tree
+        | Search value ->
+            printfn "Search result: %s" (search tree value)
+            tree
 
 
     let print = printfn "%A"
@@ -137,12 +157,17 @@ module BST =
         |> parse
         |> (fun c ->
             match c with
-            | Valid o ->
-                let newState = { state with tree = eval state.tree o }
+            | Valid (Insert x) ->
+                let newState = { state with tree = eval state.tree (Insert x) }
                 print newState
                 loop newState
+            | Valid o ->
+                let newState = { state with tree = eval state.tree o }
+                loop newState
             | Exit -> printfn "Bye bye!"
-            | Invalid e -> printfn "Error: %s" e)
+            | Invalid e ->
+                printfn "Error: %s" e
+                loop state)
 
 
     let run () =
