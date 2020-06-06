@@ -17,8 +17,13 @@ module Program =
 
 
         // 3. Third program - Queen attack
-        printfn "Welcome to the Queen attach problem"
-        TwoQueens.run ()
+        // printfn "Welcome to the Queen attack problem"
+        // TwoQueens.run ()
+
+        // 4. Fourth program - Binary Search Tree
+        printfn "Welcome to the BST program"
+        DataStructure.BST.run ()
+
 
         // return an integer exit code
         0
