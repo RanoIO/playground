@@ -9,6 +9,7 @@
     <Compile Include="LeapYear.fs" />
     <Compile Include="TwoQueens.fs" />
     <Compile Include="DataStructure/BST.fs" />
+    <Compile Include="Euler/01-Multiple.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
