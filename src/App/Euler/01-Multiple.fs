@@ -22,10 +22,12 @@ module Multiple3And5 =
 module EvenFibonacci =
 
     let generator (maxValue: int64) =
-        Seq.unfold (fun (n1, n2) ->
-           let add = n1 + n2;
-           Some (add, (n2, add))) (0L, 1L)
-       |> Seq.takeWhile (fun next -> next < maxValue)
+        Seq.unfold
+            (fun (n1, n2) ->
+                let add = n1 + n2;
+                Some (add, (n2, add)))
+            (0L, 1L)
+        |> Seq.takeWhile (fun next -> next < maxValue)
 
 
     let sumOfEven seq =
