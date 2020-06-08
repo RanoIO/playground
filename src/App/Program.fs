@@ -26,9 +26,11 @@ module Program =
         // DataStructure.BST.run ()
 
 
-        // 5. Multiples of 3 and 5
-        printfn "Euler 01 - multiples of 3 and 5"
-        Euler.Multiple3And5.run ()
+        // 5. Euler 01 - Multiples of 3 and 5
+        // Euler.Multiple3And5.run ()
+
+        // 6. Euler 02 - Even Fibonacci numbers
+        Euler.EvenFibonacci.run ()
 
         // return an integer exit code
         0
