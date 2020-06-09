@@ -36,6 +36,7 @@ module QuickSort =
 module MergeSort =
 
     let merge left right =
+        // This final + inner recursion is not exactly CPS but similar to that.
         let rec recur final left right =
 
             // printfn "Recursion %A %A %A" final left right
@@ -52,6 +53,7 @@ module MergeSort =
         recur [] left right
 
 
+    // List with 2 items feels more like a short-circuit/optimization step
     let rec sort list =
         match list with
         | [] -> []
@@ -77,6 +79,6 @@ module MergeSort =
     let run () =
         printfn "Merge sort examples"
         example [ 100; 90; 80; 70; 60; 50; 40; 30; 20; 10 ]
-        example [ 10; 20; 30; 40; 50; 60; 70; 80; 90 ]
+        example [ 10; 20; 30; 40; 50; 40; 60; 70; 80; 90 ]
         example [ 50; 30; 80 ]
         example [ 100L; 400L; 250L; 200L; 30L; 800L ]
