@@ -30,7 +30,13 @@ module Program =
         // Euler.Multiple3And5.run ()
 
         // 6. Euler 02 - Even Fibonacci numbers
-        Euler.EvenFibonacci.run ()
+        // Euler.EvenFibonacci.run ()
+
+        // 7. Quick Sort
+        // QuickSort.run ()
+
+        // 8. Merge Sort
+        MergeSort.run ()
 
         // return an integer exit code
         0
