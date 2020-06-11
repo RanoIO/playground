@@ -3,6 +3,8 @@ namespace HP.Web
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Types
 
+open Newtonsoft.Json
+
 
 module Graph1 =
 
@@ -36,6 +38,14 @@ module Graph1 =
     let schema = Schema(QueryRoot)
 
 
+    let settings =
+        let x = JsonSerializerSettings()
+        x.ContractResolver <- Serialization.CamelCasePropertyNamesContractResolver()
+        x
+
+    let json o = JsonConvert.SerializeObject(o, settings)
+
+
     let run () =
 
         let query = """
@@ -49,7 +59,9 @@ module Graph1 =
         let result =
             async {
                 let! response = Executor(schema).AsyncExecute(query)
-                printf "%A" response
+                let result = json response
+
+                printf "%A\n%s" response result
             }
 
         result |> Async.RunSynchronously
