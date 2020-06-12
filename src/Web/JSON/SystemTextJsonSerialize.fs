@@ -40,6 +40,7 @@ module BuiltIn =
 
 
     let options =
+        // This is an example of named arguments. For methods (not let-bound function), arguments can be passed by name.
         let opts = JsonSerializerOptions(WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase)
         opts.Converters.Add(Serialization.JsonStringEnumConverter())
         opts

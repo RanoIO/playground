@@ -9,8 +9,8 @@ module Main =
 
         printfn "Hello GraphQL!"
 
-        // HP.Json.BuiltIn.run ()
+        HP.Json.BuiltIn.run ()
 
-        Graph1.run ()
+        // Graph1.run ()
 
         0 // return an integer exit code

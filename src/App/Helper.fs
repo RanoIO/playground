@@ -12,11 +12,11 @@ module Helper =
         | true -> Some value
         | _ -> None
 
-
+    // When, C# function takes two values - first as any value and second as out parameter,
+    // F# will automatically convert the function into a tuple returning function where
+    // the first element is the function return value and the second is the “out” parameter.
     let tryDouble (str: string) =
-        let mutable value = 0.0
-        let succ = Double.TryParse(str, &value)
-
+        let (succ, value) = Double.TryParse(str)
         if succ then Some value else None
 
 
