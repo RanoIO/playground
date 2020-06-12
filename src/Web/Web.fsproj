@@ -7,9 +7,9 @@
 
   <ItemGroup>
     <Compile Include="JSON/JSONModel.fs" />
+    <Compile Include="JSON/DynamicReflection.fs" />
     <Compile Include="JSON/SystemTextJsonSerialize.fs" />
     <Compile Include="GraphQL/GQL-01.fs" />
-    <Compile Include="SuaveToDo/Server.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
