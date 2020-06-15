@@ -82,8 +82,7 @@ module Api =
 
             match data with
             | Some item ->
-                let response = json item
-                return! response ctx
+                return! json item ctx
             | None ->
                 return! RequestErrors.NOT_FOUND "Not Found" ctx
         }

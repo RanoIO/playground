@@ -13,7 +13,12 @@ module Graph1 =
           lastName: string
           age: int }
 
-    let people =
+    type Person2 =
+        { firstName: string
+          lastName: string
+          age: int }
+
+    let people: List<Person> =
         [ { firstName = "Harshal"
             lastName = "Patil"
             age = 20 }
@@ -21,12 +26,18 @@ module Graph1 =
             lastName = "Phadatare"
             age = 30 } ]
 
+
+    // Really interesting type-safe way to define resolver
+    let fieldDef: FieldDef<Person> = Define.Field("firstName", String, "Optional description", (fun ctx (p: Person) -> p.firstName))
+    let fieldDef2: FieldDef<Person2> = Define.Field("firstName", String, (fun ctx (p: Person2) -> p.firstName))
+
+
     let Person =
-        Define.Object
-            ("Person",
-             [ Define.Field("firstName", String, (fun ctx p -> p.firstName))
-               Define.Field("lastName", String, (fun ctx p -> p.lastName))
-               Define.Field("age", Int, (fun ctx p -> p.age)) ])
+        Define.Object(
+            "Person",
+            [ Define.Field("firstName", String, (fun ctx (p: Person) -> p.firstName))
+              Define.Field("lastName", String, (fun ctx (p: Person) -> p.lastName))
+              Define.Field("age", Int, (fun ctx p -> p.age)) ])
 
 
     let QueryRoot =
