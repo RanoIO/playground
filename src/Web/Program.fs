@@ -10,12 +10,12 @@ module Main =
         printfn "Hello Web Programming!"
 
         // JSON Serialization
-        // HP.Json.BuiltIn.run ()
+        // HP.Json.Example01.run ()
 
         // GraphQL Hello world
-        // Graph1.run ()
+        Graph1.run ()
 
         // Reflection playground
-        HP.Json.DynamicReflection.run ()
+        // HP.Json.DynamicReflection.run ()
 
         0 // return an integer exit code

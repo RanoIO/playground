@@ -3,8 +3,7 @@ namespace HP.Web
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Types
 
-open Newtonsoft.Json
-
+open HP.Json
 
 module Graph1 =
 
@@ -18,6 +17,7 @@ module Graph1 =
           lastName: string
           age: int }
 
+
     let people: List<Person> =
         [ { firstName = "Harshal"
             lastName = "Patil"
@@ -28,8 +28,12 @@ module Graph1 =
 
 
     // Really interesting type-safe way to define resolver
-    let fieldDef: FieldDef<Person> = Define.Field("firstName", String, "Optional description", (fun ctx (p: Person) -> p.firstName))
-    let fieldDef2: FieldDef<Person2> = Define.Field("firstName", String, (fun ctx (p: Person2) -> p.firstName))
+    let fieldDef: FieldDef<Person> =
+        Define.Field("firstName", String, "Optional description", (fun ctx (p: Person) -> p.firstName))
+
+
+    let fieldDef2: FieldDef<Person2> =
+        Define.Field("firstName", String, (fun ctx (p: Person2) -> p.firstName))
 
 
     let Person =
@@ -48,15 +52,6 @@ module Graph1 =
 
     let schema = Schema(QueryRoot)
 
-
-    let settings =
-        let x = JsonSerializerSettings()
-        x.ContractResolver <- Serialization.CamelCasePropertyNamesContractResolver()
-        x
-
-    let json o = JsonConvert.SerializeObject(o, settings)
-
-
     let run () =
 
         let query = """
@@ -70,9 +65,10 @@ module Graph1 =
         let result =
             async {
                 let! response = Executor(schema).AsyncExecute(query)
-                let result = json response
+                let result1 = Json1.stringify response
+                // let result2 = Json2.stringify response
 
-                printf "%A\n%s" response result
+                printf "%A\n%s" response result1
             }
 
         result |> Async.RunSynchronously
