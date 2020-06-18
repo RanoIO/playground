@@ -8,7 +8,7 @@ module Models =
         | Female
         | Other of string
 
-    // Enum
+    // This is a classical Enum
     type CustomerType =
         | Free = 0
         | Paid = 1
