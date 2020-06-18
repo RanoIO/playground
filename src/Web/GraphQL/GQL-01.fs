@@ -7,6 +7,8 @@ open HP.Json
 
 module Graph1 =
 
+    type Payload = { data: obj }
+
     type Person =
         { firstName: string
           lastName: string
@@ -65,10 +67,20 @@ module Graph1 =
         let result =
             async {
                 let! response = Executor(schema).AsyncExecute(query)
-                let result1 = Json1.stringify response
-                // let result2 = Json2.stringify response
 
-                printf "%A\n%s" response result1
+                match response.Content with
+                | Execution.Direct (dictionary, error) ->
+
+                    let (_, documentId) = dictionary.TryGetValue "documentId"
+                    let (_, data) = dictionary.TryGetValue "data"
+
+                    printfn "%A" <| documentId.GetType()
+                    printfn "%A" <| data.GetType()
+
+                    printfn "%s" <| Json3.stringify data
+                    // printfn "%s" <| Json2.stringify payload
+                | _ ->
+                    printfn "weird"
             }
 
         result |> Async.RunSynchronously

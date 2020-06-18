@@ -1,0 +1,22 @@
+{
+    "content": {
+        "case": "Direct",
+        "fields": [
+            {
+                "documentId": 673665025,
+                "data": {
+                    "people": [
+                        {
+                            "firstName": "Harshal"
+                        },
+                        {
+                            "firstName": "Nitesh"
+                        }
+                    ]
+                }
+            },
+            []
+        ]
+    },
+    "metadata": {}
+}

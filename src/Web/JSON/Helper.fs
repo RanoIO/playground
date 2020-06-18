@@ -1,33 +1,8 @@
 namespace HP.Json
 
 
-// Uses Newtonsoft.Json
-module Json1 =
-    open Newtonsoft.Json
-    let newtonSetting =
-        let x = JsonSerializerSettings()
-        x.ContractResolver <- Serialization.CamelCasePropertyNamesContractResolver()
-        x
-
-    let stringify o = JsonConvert.SerializeObject(o, newtonSetting)
-
-
-// Uses FSharp.SystemTextJson
-module Json2 =
-    open System.Text
-
-    let jsonOptions =
-        let opts = Json.JsonSerializerOptions()
-        opts.Converters.Add(Json.Serialization.JsonFSharpConverter())
-        opts
-
-
-    let stringify obj =
-        Json.JsonSerializer.Serialize(obj, jsonOptions)
-
-
 // Built in-serialization
-module Json3 =
+module Json1 =
 
     open System.Text.Json
 
@@ -48,3 +23,28 @@ module Json3 =
     // Efficient (byte based serialization)
     let bytify obj =
         JsonSerializer.SerializeToUtf8Bytes obj
+
+
+// Uses FSharp.SystemTextJson
+module Json2 =
+    open System.Text
+
+    let jsonOptions =
+        let opts = Json.JsonSerializerOptions()
+        opts.Converters.Add(Json.Serialization.JsonFSharpConverter())
+        opts
+
+
+    let stringify obj =
+        Json.JsonSerializer.Serialize(obj, jsonOptions)
+
+
+// Uses Newtonsoft.Json
+module Json3 =
+    open Newtonsoft.Json
+    let newtonSetting =
+        let x = JsonSerializerSettings()
+        x.ContractResolver <- Serialization.CamelCasePropertyNamesContractResolver()
+        x
+
+    let stringify o = JsonConvert.SerializeObject(o, newtonSetting)
