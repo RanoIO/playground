@@ -3,6 +3,7 @@
 open System
 
 open Npgsql
+open System.Linq
 open FSharp.Data.Sql
 
 [<Literal>]
@@ -14,9 +15,9 @@ let [<Literal>] indivAmount = 1000
 let [<Literal>] schema = "public"
 
 let [<Literal>] useOptTypes = true
-let [<Literal>] resPath = @"pglibs"
+let [<Literal>] resPath = @"C:\work\code\visual-studio\playground\src\Postgres\pglibs"
 
-type PgSource =
+type PGSource =
     SqlDataProvider<
         DatabaseVendor = dbVendor,
         ConnectionString = connString,
@@ -32,27 +33,65 @@ type PgSource =
 [<EntryPoint>]
 let main argv =
 
-    let context = PgSource.GetDataContext()
+    Common.QueryEvents.SqlQueryEvent
+    |> Event.add (printfn "Executing SQL: %O")
 
 
-    let projects = context.Public.Project
+    let context = PGSource.GetDataContext()
 
-    let conn = context.CreateConnection()
+    // let newUser =
+    //     let user =
+    //         context
+    //             .Public.User
+    //             .Create("h@hp.com", "Harshal", "Patil", "1234", "1234", "1234")
+    //     user.Id <- "1"
+    //     context.SubmitUpdates ()
 
-    let trans = conn.BeginTransaction()
+    // let newGoogleAccount =
+    //     let ga =
+    //         context
+    //             .Public.GoogleAccount
+    //             .Create("ga@hp.com", "12345", "1")
+    //     ga.Id <- "101"
+    //     context.SubmitUpdates ()
 
-    let cmd = conn.CreateCommand ()
+    // context.Public.User.Individuals.``1``
 
-    cmd.CommandText <- "select * from project"
-
-    let someQuery =
+    let q1 =
         query {
-            for x in projects do
-            select (x.Name, x.Id)
+            for x in context.Public.User do
+            join y in context.Public.GoogleAccount on (x.Id = y.UserId)
+            select (x, y)
         }
 
+    // let result =
+    //     q1
+    //     |> Seq.toList
 
+    // let r2 = List.head result
 
-    printfn "Hello World from F#! %s" resPath
+    // let r3 =
+    //     (fst r2).``public.GoogleAccount by id``
+    //     |> Seq.toList
+
+    // printfn "Hello World from F#! %O" (r3.Head.Email)
+
+    let n1 =
+        query {
+            for x in context.Public.User do
+            select (x.Id)
+        }
+
+    let n2 =
+        query {
+            for y in context.Public.GoogleAccount do
+                where (n1.Contains(y.UserId))
+                select y
+        }
+
+    let result = n2 |> Seq.toList
+
+    printfn "Hello world from F# %A" result
+
 
     0 // return an integer exit code
