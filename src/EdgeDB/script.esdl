@@ -1,5 +1,4 @@
-start transaction;
-create migration first to {
+start migration to {
   module default {
 
     type User {
@@ -31,5 +30,31 @@ create migration first to {
 
   };
 };
-commit migration first;
-commit;
+
+populate migration;
+describe current migration;
+commit migration;
+
+
+
+
+start migration to {
+  module default {
+
+    type Project {
+      required property name -> str;
+
+      multi link tests -> TestCase;
+    };
+
+    type TestCase {
+      required property name -> str {
+        constraint exclusive;
+      };
+    };
+
+  };
+};
+populate migration;
+describe current migration;
+commit migration;

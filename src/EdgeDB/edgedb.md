@@ -28,11 +28,20 @@ edgedb -H localhost -u edgedb
 
 CONFIGURE SYSTEM INSERT Port {
     protocol := "graphql+http",
-    database := "sulphur",
+    database := "testdb",
     address := "0.0.0.0",
     port := 8888,
     user := "http",
-    concurrency := 4,
+    concurrency := 4
+};
+
+CONFIGURE SYSTEM INSERT Port {
+    protocol := "edgeql+http",
+    database := "sulphur",
+    address := "0.0.0.0",
+    port := 8889,
+    user := "http",
+    concurrency := 4
 };
 
 ```

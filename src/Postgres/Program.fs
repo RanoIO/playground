@@ -14,24 +14,43 @@ let [<Literal>] indivAmount = 1000
 let [<Literal>] schema = "public"
 
 let [<Literal>] useOptTypes = true
-let [<Literal>] resPath = @"C:\work\code\visual-studio\playground\src\Postgres\libraries"
+let [<Literal>] resPath = @"pglibs"
 
-
-// type PgSource =
-//     SqlDataProvider<
-//         DatabaseVendor = dbVendor,
-//         ConnectionString = connString,
-//         CaseSensitivityChange = Common.CaseSensitivityChange.ORIGINAL,
-//         ResolutionPath = resPath,
-//         ConnectionStringName = "",
-//         IndividualsAmount = indivAmount,
-//         UseOptionTypes = useOptTypes,
-//         Owner = schema>
+type PgSource =
+    SqlDataProvider<
+        DatabaseVendor = dbVendor,
+        ConnectionString = connString,
+        CaseSensitivityChange = Common.CaseSensitivityChange.ORIGINAL,
+        ResolutionPath = resPath,
+        ConnectionStringName = "",
+        IndividualsAmount = indivAmount,
+        UseOptionTypes = useOptTypes,
+        Owner = schema>
 
 
 
 [<EntryPoint>]
 let main argv =
+
+    let context = PgSource.GetDataContext()
+
+
+    let projects = context.Public.Project
+
+    let conn = context.CreateConnection()
+
+    let trans = conn.BeginTransaction()
+
+    let cmd = conn.CreateCommand ()
+
+    cmd.CommandText <- "select * from project"
+
+    let someQuery =
+        query {
+            for x in projects do
+            select (x.Name, x.Id)
+        }
+
 
 
     printfn "Hello World from F#! %s" resPath
